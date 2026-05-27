@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maede Yousefi — Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+          },
+          colors: {
+            stone: { 50:'#fafaf9',100:'#f5f5f4',200:'#e7e5e4',300:'#d6d3d1',400:'#a8a29e',500:'#78716c',600:'#57534e',700:'#44403c',800:'#292524',900:'#1c1917' },
+            accent: { 50:'#fffbeb',100:'#fef3c7',200:'#fde68a',400:'#fbbf24',500:'#f59e0b',600:'#d97706',700:'#b45309' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; }
+
+    /* Reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.5,0,0,1), transform 0.8s cubic-bezier(0.5,0,0,1);
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .delay-100 { transition-delay: 0.1s; }
+    .delay-200 { transition-delay: 0.2s; }
+    .delay-300 { transition-delay: 0.3s; }
+    .delay-400 { transition-delay: 0.4s; }
+    .delay-500 { transition-delay: 0.5s; }
+
+    /* Skill bar animation */
+    .skill-fill {
+      width: 0%;
+      transition: width 1.2s cubic-bezier(0.5,0,0,1);
+    }
+    .skill-fill.active { /* width set inline */ }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #fafaf9; }
+    ::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #a8a29e; }
+
+    /* Hero floating shapes */
+    @keyframes float1 {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(-3deg); }
+    }
+    @keyframes float3 {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-25px) rotate(8deg); }
+    }
+    .float-1 { animation: float1 6s ease-in-out infinite; }
+    .float-2 { animation: float2 8s ease-in-out infinite; }
+    .float-3 { animation: float3 7s ease-in-out infinite; }
+
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(135deg, #d97706, #f59e0b, #d97706);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Timeline line */
+    .timeline-line {
+      position: absolute;
+      left: 19px;
+      top: 40px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #e7e5e4, transparent);
+    }
+
+    /* Nav active */
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #d97706;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    /* Card hover */
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+
+    /* Dot pulse */
+    .dot-pulse {
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(217,119,6,0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(217,119,6,0); }
+    }
+  </style>
+</head>
+<body class="bg-white text-stone-800 overflow-x-hidden">
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="height:80px;">
+    <div class="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
+      <a href="#hero" class="font-serif text-xl font-600 tracking-tight text-stone-800">
+        <span class="gradient-text">M</span>aede<span class="text-stone-400">.</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#about" class="nav-link text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">About</a>
+        <a href="#skills" class="nav-link text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Skills</a>
+        <a href="#experience" class="nav-link text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Experience</a>
+        <a href="#education" class="nav-link text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Education</a>
+        <a href="#contact" class="inline-flex items-center gap-2 bg-stone-900 text-white text-sm font-medium px-5 py-2.5 rounded-full hover:bg-stone-800 hover:-translate-y-0.5 transition-all duration-300 shadow-lg">
+          <span>Contact Me</span>
+          <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+        </a>
+      </div>
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn" class="md:hidden p-2 text-stone-600 hover:text-stone-900">
+        <span class="iconify" data-icon="lucide:menu" data-width="24"></span>
+      </button>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white/95 backdrop-blur-xl border-t border-stone-200/50 px-6 py-4">
+      <a href="#about" class="block py-3 text-sm font-medium text-stone-600 hover:text-stone-900">About</a>
+      <a href="#skills" class="block py-3 text-sm font-medium text-stone-600 hover:text-stone-900">Skills</a>
+      <a href="#experience" class="block py-3 text-sm font-medium text-stone-600 hover:text-stone-900">Experience</a>
+      <a href="#education" class="block py-3 text-sm font-medium text-stone-600 hover:text-stone-900">Education</a>
+      <a href="#contact" class="block py-3 text-sm font-medium text-accent-600 hover:text-accent-700">Contact Me</a>
+    </div>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <!-- Decorative shapes -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="float-1 absolute top-20 right-[15%] w-24 h-24 rounded-full bg-accent-100/60 blur-sm"></div>
+      <div class="float-2 absolute top-[40%] left-[8%] w-16 h-16 rounded-2xl bg-stone-200/60 rotate-12 blur-sm"></div>
+      <div class="float-3 absolute bottom-[25%] right-[10%] w-20 h-20 rounded-full bg-accent-200/40 blur-sm"></div>
+      <div class="float-2 absolute bottom-[15%] left-[20%] w-12 h-12 rounded-xl bg-accent-100/50 -rotate-12 blur-sm"></div>
+      <div class="float-1 absolute top-[30%] right-[30%] w-8 h-8 rounded-lg bg-accent-500/10 rotate-45"></div>
+      <!-- Grid pattern -->
+      <div class="absolute inset-0" style="background-image: radial-gradient(circle, #e7e5e4 1px, transparent 1px); background-size: 40px 40px; opacity: 0.3;"></div>
+    </div>
+
+    <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <!-- Status badge -->
+      <div class="reveal inline-flex items-center gap-2 bg-accent-50 border border-accent-200 text-accent-700 text-xs font-semibold uppercase tracking-wider px-4 py-2 rounded-full mb-8">
+        <span class="w-2 h-2 rounded-full bg-accent-500 dot-pulse"></span>
+        Available for Freelance
+      </div>
+
+      <h1 class="reveal delay-100 font-serif text-4xl md:text-6xl lg:text-7xl font-700 tracking-tight text-stone-900 leading-[1.1] mb-6">
+        Hi, I'm <span class="gradient-text">Maede</span><br />
+        Yousefi
+      </h1>
+
+      <p class="reveal delay-200 text-lg md:text-xl text-stone-500 font-light leading-relaxed max-w-2xl mx-auto mb-10">
+        Graphic Designer & Illustrator · Computer Instructor · Crafting visual stories with creativity and precision
+      </p>
+
+      <div class="reveal delay-300 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#work" class="inline-flex items-center gap-2 bg-stone-900 text-white text-base font-medium px-8 py-3.5 rounded-full hover:bg-stone-800 hover:-translate-y-0.5 transition-all duration-300 shadow-lg shadow-stone-900/20">
+          <span>View My Work</span>
+          <span class="iconify" data-icon="lucide:arrow-down" data-width="16"></span>
+        </a>
+        <a href="#contact" class="inline-flex items-center gap-2 bg-white text-stone-700 text-base font-medium px-8 py-3.5 rounded-full border border-stone-200 hover:border-stone-300 hover:-translate-y-0.5 transition-all duration-300">
+          <span class="iconify" data-icon="lucide:mail" data-width="16"></span>
+          <span>Get in Touch</span>
+        </a>
+      </div>
+
+      <!-- Quick stats -->
+      <div class="reveal delay-400 flex items-center justify-center gap-8 mt-16 pt-8 border-t border-stone-200/60">
+        <div class="text-center">
+          <div class="text-2xl font-serif font-700 text-stone-900">2+</div>
+          <div class="text-xs text-stone-500 font-medium mt-1">Years Exp.</div>
+        </div>
+        <div class="w-px h-8 bg-stone-200"></div>
+        <div class="text-center">
+          <div class="text-2xl font-serif font-700 text-stone-900">6+</div>
+          <div class="text-xs text-stone-500 font-medium mt-1">Skills</div>
+        </div>
+        <div class="w-px h-8 bg-stone-200"></div>
+        <div class="text-center">
+          <div class="text-2xl font-serif font-700 text-stone-900">∞</div>
+          <div class="text-xs text-stone-500 font-medium mt-1">Passion</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-stone-400">
+      <span class="text-[10px] uppercase tracking-widest font-medium">Scroll</span>
+      <div class="w-5 h-8 border-2 border-stone-300 rounded-full flex justify-center pt-1.5">
+        <div class="w-1 h-2 bg-stone-400 rounded-full animate-bounce"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT ==================== -->
+  <section id="about" class="relative py-24 bg-stone-50">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <!-- Image side -->
+        <div class="reveal relative">
+          <div class="relative rounded-2xl overflow-hidden aspect-[4/5] bg-stone-200 shadow-xl">
+            <img src="https://picsum.photos/seed/maede-designer/600/750.jpg" alt="Maede Yousefi" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-stone-900/20 to-transparent"></div>
+          </div>
+          <!-- Floating card -->
+          <div class="absolute -bottom-6 -right-4 md:-right-8 bg-white rounded-xl shadow-xl p-4 border border-stone-100">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-lg bg-accent-100 flex items-center justify-center">
+                <span class="iconify text-accent-600" data-icon="lucide:pen-tool" data-width="20"></span>
+              </div>
+              <div>
+                <div class="text-sm font-semibold text-stone-800">Graphic Designer</div>
+                <div class="text-xs text-stone-500">Illustrator & Instructor</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text side -->
+        <div>
+          <div class="reveal">
+            <span class="text-xs font-semibold uppercase tracking-wider text-accent-600 mb-3 block">About Me</span>
+            <h2 class="font-serif text-3xl md:text-4xl font-600 tracking-tight text-stone-900 mb-6">
+              Designing with<br /><span class="gradient-text">Purpose & Passion</span>
+            </h2>
+          </div>
+
+          <div class="reveal delay-100 space-y-4 text-stone-600 leading-relaxed">
+            <p>
+              I'm Maede Yousefi — a 19-year-old graphic designer and computer engineering student based in Tehran, Iran. I blend technical skills with artistic vision to create visuals that communicate and captivate.
+            </p>
+            <p>
+              Currently, I work as a Computer Instructor at Dariyaye Elam Academy, teaching ICDL and Adobe Premiere courses, while also taking on freelance illustration and design projects — from logos to posters and advertising brochures.
+            </p>
+            <p>
+              I believe great design lives at the intersection of creativity and functionality. Every project I take on is an opportunity to tell a visual story that resonates.
+            </p>
+          </div>
+
+          <!-- Quick info grid -->
+          <div class="reveal delay-200 grid grid-cols-2 gap-4 mt-8">
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white border border-stone-100">
+              <span class="iconify text-accent-600" data-icon="lucide:map-pin" data-width="16"></span>
+              <span class="text-sm text-stone-600">Tehran, Iran</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white border border-stone-100">
+              <span class="iconify text-accent-600" data-icon="lucide:graduation-cap" data-width="16"></span>
+              <span class="text-sm text-stone-600">BSc Student</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white border border-stone-100">
+              <span class="iconify text-accent-600" data-icon="lucide:briefcase" data-width="16"></span>
+              <span class="text-sm text-stone-600">Freelancer</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white border border-stone-100">
+              <span class="iconify text-accent-600" data-icon="lucide:languages" data-width="16"></span>
+              <span class="text-sm text-stone-600">English (Pro)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SERVICES / WHAT I DO ==================== -->
+  <section id="work" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <span class="reveal text-xs font-semibold uppercase tracking-wider text-accent-600 mb-3 block">What I Do</span>
+        <h2 class="reveal delay-100 font-serif text-3xl md:text-4xl font-600 tracking-tight text-stone-900">
+          Services & <span class="gradient-text">Expertise</span>
+        </h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Card 1 -->
+        <div class="reveal card-hover group bg-white rounded-2xl border border-stone-200/70 p-8 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-accent-50 rounded-bl-[3rem] -z-0 group-hover:bg-accent-100 transition-colors duration-300"></div>
+          <div class="relative z-10">
+            <div class="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
+              <span class="iconify text-accent-600" data-icon="lucide:pen-tool" data-width="22"></span>
+            </div>
+            <h3 class="text-lg font-semibold text-stone-900 mb-2">Illustration & Logo Design</h3>
+            <p class="text-sm text-stone-500 leading-relaxed">Custom illustrations, logos, and brand marks that capture your identity and tell your story visually.</p>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="reveal delay-100 card-hover group bg-white rounded-2xl border border-stone-200/70 p-8 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-accent-50 rounded-bl-[3rem] -z-0 group-hover:bg-accent-100 transition-colors duration-300"></div>
+          <div class="relative z-10">
+            <div class="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
+              <span class="iconify text-accent-600" data-icon="lucide:image" data-width="22"></span>
+            </div>
+            <h3 class="text-lg font-semibold text-stone-900 mb-2">Print & Ad Design</h3>
+            <p class="text-sm text-stone-500 leading-relaxed">Posters, banners, and advertising brochures designed to stand out and make an impact.</p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="reveal delay-200 card-hover group bg-white rounded-2xl border border-stone-200/70 p-8 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-accent-50 rounded-bl-[3rem] -z-0 group-hover:bg-accent-100 transition-colors duration-300"></div>
+          <div class="relative z-10">
+            <div class="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
+              <span class="iconify text-accent-600" data-icon="lucide:video" data-width="22"></span>
+            </div>
+            <h3 class="text-lg font-semibold text-stone-900 mb-2">Video Editing</h3>
+            <p class="text-sm text-stone-500 leading-relaxed">Professional editing with Adobe Premiere Pro — from introductory cuts to advanced post-production.</p>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="reveal card-hover group bg-white rounded-2xl border border-stone-200/70 p-8 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-accent-50 rounded-bl-[3rem] -z-0 group-hover:bg-accent-100 transition-colors duration-300"></div>
+          <div class="relative z-10">
+            <div class="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
+              <span class="iconify text-accent-600" data-icon="lucide:globe" data-width="22"></span>
+            </div>
+            <h3 class="text-lg font-semibold text-stone-900 mb-2">Web Design</h3>
+            <p class="text-sm text-stone-500 leading-relaxed">Responsive websites with WordPress and custom development — UI-focused and user-friendly.</p>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="reveal delay-100 card-hover group bg-white rounded-2xl border border-stone-200/70 p-8 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-accent-50 rounded-bl-[3rem] -z-0 group-hover:bg-accent-100 transition-colors duration-300"></div>
+          <div class="relative z-10">
+            <div class="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
+              <span class="iconify text-accent-600" data-icon="lucide:monitor-play" data-width="22"></span>
+            </div>
+            <h3 class="text-lg font-semibold text-stone-900 mb-2">Teaching & Training</h3>
+            <p class="text-sm text-stone-500 leading-relaxed">ICDL and Adobe Premiere instruction — helping students build real-world digital skills with confidence.</p>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="reveal delay-200 card-hover group bg-white rounded-2xl border border-stone-200/70 p-8 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-accent-50 rounded-bl-[3rem] -z-0 group-hover:bg-accent-100 transition-colors duration-300"></div>
+          <div class="relative z-10">
+            <div class="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
+              <span class="iconify text-accent-600" data-icon="lucide:search" data-width="22"></span>
+            </div>
+            <h3 class="text-lg font-semibold text-stone-900 mb-2">Data & Research</h3>
+            <p class="text-sm text-stone-500 leading-relaxed">Data gathering and information sourcing — finding, organizing, and presenting the right data effectively.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SKILLS ==================== -->
+  <section id="skills" class="py-24 bg-stone-50">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <span class="reveal text-xs font-semibold uppercase tracking-wider text-accent-600 mb-3 block">My Skills</span>
+        <h2 class="reveal delay-100 font-serif text-3xl md:text-4xl font-600 tracking-tight text-stone-900">
+          Tools & <span class="gradient-text">Technologies</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-12">
+        <!-- Design Skills -->
+        <div class="reveal">
+          <h3 class="text-sm font-semibold uppercase tracking-wider text-stone-400 mb-6 flex items-center gap-2">
+            <span class="iconify text-accent-500" data-icon="lucide:palette" data-width="16"></span>
+            Design & Creative
+          </h3>
+          <div class="space-y-5">
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="text-sm font-medium text-stone-700">Adobe Illustrator</span>
+                <span class="text-xs font-semibold text-accent-600">Advanced</span>
+              </div>
+              <div class="h-2 bg-stone-200 rounded-full overflow-hidden">
+                <div class="skill-fill h-full rounded-full bg-gradient-to-r from-accent-500 to-accent-400" data-width="90"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="text-sm font-medium text-stone-700">Adobe Photoshop</span>
+                <span class="text-xs font-semibold text-accent-600">Advanced</span>
+              </div>
+              <div class="h-2 bg-stone-200 rounded-full overflow-hidden">
+                <div class="skill-fill h-full rounded-full bg-gradient-to-r from-accent-500 to-accent-400" data-width="90"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="text-sm font-medium text-stone-700">Premiere Pro</span>
+                <span class="text-xs font-semibold text-accent-600">Advanced</span>
+              </div>
+              <div class="h-2 bg-stone-200 rounded-full overflow-hidden">
+                <div class="skill-fill h-full rounded-full bg-gradient-to-r from-accent-500 to-accent-400" data-width="85"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="text-sm font-medium text-stone-700">ICDL</span>
+                <span class="text-xs font-semibold text-accent-600">Advanced</span>
+              </div>
+              <div class="h-2 bg-stone-200 rounded-full overflow-hidden">
+                <div class="skill-fill h-full rounded-full bg-gradient-to-r from-accent-500 to-accent-400" data-width="90"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="text-sm font-medium text-stone-700">Data Gathering & Research</span>
+                <span class="text-xs font-semibold text-accent-600">Advanced</span>
+              </div>
+              <div class="h-2 bg-stone-200 rounded-full overflow-hidden">
+                <div class="skill-fill h-full rounded-full bg-gradient-to-r from-accent-500 to-accent-400" data-width="88"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tech Skills -->
+        <div class="reveal delay-200">
+          <h3 class="text-sm font-semibold uppercase tracking-wider text-stone-400 mb-6 flex items-center gap-2">
+            <span class="iconify text-accent-500" data-icon="lucide:code-2" data-width="16"></span>
+            Development & Tech
+          </h3>
+          <div class="space-y-5">
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="text-sm font-medium text-stone-700">Web Design</span>
+                <span class="text-xs font-semibold text-stone-500">Intermediate</span>
+              </div>
+              <div class="h-2 bg-stone-200 rounded-full overflow-hidden">
+                <div class="skill-fill h-full rounded-full bg-gradient-to-r from-stone-500 to-stone-400" data-width="65"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="text-sm font-medium text-stone-700">WordPress</span>
+                <span class="text-xs font-semibold text-stone-500">Intermediate</span>
+              </div>
+              <div class="h-2 bg-stone-200 rounded-full overflow-hidden">
+                <div class="skill-fill h-full rounded-full bg-gradient-to-r from-stone-500 to-stone-400" data-width="65"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="text-sm font-medium text-stone-700">Web Programming</span>
+                <span class="text-xs font-semibold text-stone-500">Intermediate</span>
+              </div>
+              <div class="h-2 bg-stone-200 rounded-full overflow-hidden">
+                <div class="skill-fill h-full rounded-full bg-gradient-to-r from-stone-500 to-stone-400" data-width="60"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="text-sm font-medium text-stone-700">Python</span>
+                <span class="text-xs font-semibold text-stone-500">Intermediate</span>
+              </div>
+              <div class="h-2 bg-stone-200 rounded-full overflow-hidden">
+                <div class="skill-fill h-full rounded-full bg-gradient-to-r from-stone-500 to-stone-400" data-width="60"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between mb-1.5">
+                <span class="text-sm font-medium text-stone-700">ASP.NET MVC</span>
+                <span class="text-xs font-semibold text-stone-500">Intermediate</span>
+              </div>
+              <div class="h-2 bg-stone-200 rounded-full overflow-hidden">
+                <div class="skill-fill h-full rounded-full bg-gradient-to-r from-stone-500 to-stone-400" data-width="55"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tool badges -->
+      <div class="reveal mt-16 text-center">
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-stone-400 mb-6">Tools I Use</h3>
+        <div class="flex flex-wrap justify-center gap-3">
+          <span class="px-4 py-2 bg-white border border-stone-200 rounded-full text-sm text-stone-600 font-medium hover:border-accent-300 hover:text-accent-700 transition-colors cursor-default">Adobe Illustrator</span>
+          <span class="px-4 py-2 bg-white border border-stone-200 rounded-full text-sm text-stone-600 font-medium hover:border-accent-300 hover:text-accent-700 transition-colors cursor-default">Adobe Photoshop</span>
+          <span class="px-4 py-2 bg-white border border-stone-200 rounded-full text-sm text-stone-600 font-medium hover:border-accent-300 hover:text-accent-700 transition-colors cursor-default">Premiere Pro</span>
+          <span class="px-4 py-2 bg-white border border-stone-200 rounded-full text-sm text-stone-600 font-medium hover:border-accent-300 hover:text-accent-700 transition-colors cursor-default">WordPress</span>
+          <span class="px-4 py-2 bg-white border border-stone-200 rounded-full text-sm text-stone-600 font-medium hover:border-accent-300 hover:text-accent-700 transition-colors cursor-default">Visual Studio</span>
+          <span class="px-4 py-2 bg-white border border-stone-200 rounded-full text-sm text-stone-600 font-medium hover:border-accent-300 hover:text-accent-700 transition-colors cursor-default">Python</span>
+          <span class="px-4 py-2 bg-white border border-stone-200 rounded-full text-sm text-stone-600 font-medium hover:border-accent-300 hover:text-accent-700 transition-colors cursor-default">ASP.NET</span>
+          <span class="px-4 py-2 bg-white border border-stone-200 rounded-full text-sm text-stone-600 font-medium hover:border-accent-300 hover:text-accent-700 transition-colors cursor-default">Figma</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== EXPERIENCE ==================== -->
+  <section id="experience" class="py-24 bg-white">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <span class="reveal text-xs font-semibold uppercase tracking-wider text-accent-600 mb-3 block">My Journey</span>
+        <h2 class="reveal delay-100 font-serif text-3xl md:text-4xl font-600 tracking-tight text-stone-900">
+          Work <span class="gradient-text">Experience</span>
+        </h2>
+      </div>
+
+      <div class="space-y-10">
+        <!-- Experience 1 -->
+        <div class="reveal card-hover relative pl-14 md:pl-16">
+          <div class="timeline-line"></div>
+          <!-- Dot -->
+          <div class="absolute left-2.5 top-1.5 w-6 h-6 rounded-full bg-accent-100 border-2 border-accent-500 flex items-center justify-center dot-pulse z-10">
+            <div class="w-2 h-2 rounded-full bg-accent-500"></div>
+          </div>
+          <!-- Content -->
+          <div class="bg-stone-50 rounded-2xl p-6 md:p-8 border border-stone-200/50">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
+              <h3 class="text-lg font-semibold text-stone-900">Freelance Illustrator</h3>
+              <span class="text-xs font-semibold text-accent-600 bg-accent-50 px-3 py-1 rounded-full w-fit">May 2024 — Present</span>
+            </div>
+            <p class="text-sm text-stone-500 mb-3">Freelancer · Tehran, Iran</p>
+            <p class="text-sm text-stone-600 leading-relaxed">Logo design, poster creation, banner design, and advertising brochure development for various clients. Delivering creative visual solutions tailored to each brand's identity.</p>
+          </div>
+        </div>
+
+        <!-- Experience 2 -->
+        <div class="reveal delay-100 card-hover relative pl-14 md:pl-16">
+          <div class="timeline-line"></div>
+          <div class="absolute left-2.5 top-1.5 w-6 h-6 rounded-full bg-accent-100 border-2 border-accent-500 flex items-center justify-center z-10">
+            <div class="w-2 h-2 rounded-full bg-accent-500"></div>
+          </div>
+          <div class="bg-stone-50 rounded-2xl p-6 md:p-8 border border-stone-200/50">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
+              <h3 class="text-lg font-semibold text-stone-900">Computer Instructor</h3>
+              <span class="text-xs font-semibold text-accent-600 bg-accent-50 px-3 py-1 rounded-full w-fit">Sep 2024 — Present</span>
+            </div>
+            <p class="text-sm text-stone-500 mb-3">Dariyaye Elam Academy · Tehran, Iran</p>
+            <p class="text-sm text-stone-600 leading-relaxed">Teaching ICDL and Adobe Premiere introductory and advanced courses, helping students develop practical digital skills for academic and professional growth.</p>
+          </div>
+        </div>
+
+        <!-- Experience 3 -->
+        <div class="reveal delay-200 card-hover relative pl-14 md:pl-16">
+          <div class="timeline-line"></div>
+          <div class="absolute left-2.5 top-1.5 w-6 h-6 rounded-full bg-stone-100 border-2 border-stone-400 flex items-center justify-center z-10">
+            <div class="w-2 h-2 rounded-full bg-stone-400"></div>
+          </div>
+          <div class="bg-stone-50 rounded-2xl p-6 md:p-8 border border-stone-200/50">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
+              <h3 class="text-lg font-semibold text-stone-900">Web Developer</h3>
+              <span class="text-xs font-semibold text-stone-500 bg-stone-100 px-3 py-1 rounded-full w-fit">Nov 2024 — Jan 2025</span>
+            </div>
+            <p class="text-sm text-stone-500 mb-3">Dariyaye Elam Academy · Tehran, Iran</p>
+            <p class="text-sm text-stone-600 leading-relaxed">Carried out a student website design project, building a fully functional website from concept to deployment.</p>
+          </div>
+        </div>
+
+        <!-- Experience 4 -->
+        <div class="reveal delay-300 card-hover relative pl-14 md:pl-16">
+          <div class="timeline-line"></div>
+          <div class="absolute left-2.5 top-1.5 w-6 h-6 rounded-full bg-stone-100 border-2 border-stone-400 flex items-center justify-center z-10">
+            <div class="w-2 h-2 rounded-full bg-stone-400"></div>
+          </div>
+          <div class="bg-stone-50 rounded-2xl p-6 md:p-8 border border-stone-200/50">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
+              <h3 class="text-lg font-semibold text-stone-900">Assistant Educational Consultant</h3>
+              <span class="text-xs font-semibold text-stone-500 bg-stone-100 px-3 py-1 rounded-full w-fit">Feb 2023 — Present</span>
+            </div>
+            <p class="text-sm text-stone-500 mb-3">Freelancer · Tehran, Iran</p>
+            <ul class="text-sm text-stone-600 leading-relaxed space-y-1.5">
+              <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-accent-500 shrink-0"></span>Managed student registrations and digital records</li>
+              <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-accent-500 shrink-0"></span>Followed up on academic documents and exam results</li>
+              <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-accent-500 shrink-0"></span>Coordinated with students and parents for documentation</li>
+              <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-accent-500 shrink-0"></span>Assisted lead consultants in progress analysis and reporting</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Experience 5 -->
+        <div class="reveal delay-400 card-hover relative pl-14 md:pl-16">
+          <div class="absolute left-2.5 top-1.5 w-6 h-6 rounded-full bg-stone-100 border-2 border-stone-400 flex items-center justify-center z-10">
+            <div class="w-2 h-2 rounded-full bg-stone-400"></div>
+          </div>
+          <div class="bg-stone-50 rounded-2xl p-6 md:p-8 border border-stone-200/50">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
+              <h3 class="text-lg font-semibold text-stone-900">Programming Intern</h3>
+              <span class="text-xs font-semibold text-stone-500 bg-stone-100 px-3 py-1 rounded-full w-fit">Jun 2023 — Aug 2023</span>
+            </div>
+            <p class="text-sm text-stone-500 mb-3">Palizafzar Corporation · Tehran, Iran</p>
+            <ul class="text-sm text-stone-600 leading-relaxed space-y-1.5">
+              <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-stone-400 shrink-0"></span>Programming internship focused on C and ASP.NET</li>
+              <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-stone-400 shrink-0"></span>Built simple console applications in C</li>
+              <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-stone-400 shrink-0"></span>Developed basic ASP.NET web pages</li>
+              <li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-stone-400 shrink-0"></span>Worked with Visual Studio and debugging tools</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== EDUCATION & CERTIFICATES ==================== -->
+  <section id="education" class="py-24 bg-stone-50">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <span class="reveal text-xs font-semibold uppercase tracking-wider text-accent-600 mb-3 block">Learning Path</span>
+        <h2 class="reveal delay-100 font-serif text-3xl md:text-4xl font-600 tracking-tight text-stone-900">
+          Education & <span class="gradient-text">Certificates</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Education -->
+        <div>
+          <h3 class="reveal text-sm font-semibold uppercase tracking-wider text-stone-400 mb-6 flex items-center gap-2">
+            <span class="iconify text-accent-500" data-icon="lucide:graduation-cap" data-width="16"></span>
+            Education
+          </h3>
+
+          <div class="space-y-4">
+            <!-- Edu 1 -->
+            <div class="reveal card-hover bg-white rounded-2xl p-6 border border-stone-200/50">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center shrink-0">
+                  <span class="iconify text-accent-600" data-icon="lucide:building-2" data-width="20"></span>
+                </div>
+                <div>
+                  <h4 class="text-base font-semibold text-stone-900">BSc in Computer Engineering</h4>
+                  <p class="text-sm text-stone-500 mt-0.5">Islamic Azad University, Yadegar Imam Branch</p>
+                  <p class="text-sm text-stone-400 mt-0.5">Hardware & Software · 2024 — Present</p>
+                  <span class="inline-flex items-center gap-1 mt-2 text-xs font-medium text-accent-600 bg-accent-50 px-2 py-0.5 rounded-full">
+                    <span class="w-1.5 h-1.5 rounded-full bg-accent-500"></span> In Progress
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Edu 2 -->
+            <div class="reveal delay-100 card-hover bg-white rounded-2xl p-6 border border-stone-200/50">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-stone-100 flex items-center justify-center shrink-0">
+                  <span class="iconify text-stone-500" data-icon="lucide:school" data-width="20"></span>
+                </div>
+                <div>
+                  <h4 class="text-base font-semibold text-stone-900">Diploma in Computer Engineering</h4>
+                  <p class="text-sm text-stone-500 mt-0.5">Shahid Batoul Agha Mohammadi Model High School</p>
+                  <p class="text-sm text-stone-400 mt-0.5">Hardware & Software · 2021 — 2024</p>
+                  <span class="inline-flex items-center gap-1 mt-2 text-xs font-medium text-stone-500 bg-stone-100 px-2 py-0.5 rounded-full">
+                    <span class="iconify" data-icon="lucide:check" data-width="10"></span> Completed
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificates -->
+        <div>
+          <h3 class="reveal text-sm font-semibold uppercase tracking-wider text-stone-400 mb-6 flex items-center gap-2">
+            <span class="iconify text-accent-500" data-icon="lucide:award" data-width="16"></span>
+            Certificates
+          </h3>
+
+          <div class="space-y-4">
+            <!-- Cert 1 -->
+            <div class="reveal card-hover bg-white rounded-2xl p-6 border border-stone-200/50">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center shrink-0">
+                  <span class="iconify text-accent-600" data-icon="lucide:file-code-2" data-width="20"></span>
+                </div>
+                <div>
+                  <h4 class="text-base font-semibold text-stone-900">ASP.NET Development</h4>
+                  <p class="text-sm text-stone-500 mt-0.5">Palizafzar Corporation</p>
+                  <p class="text-sm text-stone-400 mt-0.5">Issued 2023</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cert 2 -->
+            <div class="reveal delay-100 card-hover bg-white rounded-2xl p-6 border border-stone-200/50">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center shrink-0">
+                  <span class="iconify text-accent-600" data-icon="lucide:globe" data-width="20"></span>
+                </div>
+                <div>
+                  <h4 class="text-base font-semibold text-stone-900">Web Design (WordPress)</h4>
+                  <p class="text-sm text-stone-500 mt-0.5">Darya-e-Alam Educational Academy</p>
+                  <p class="text-sm text-stone-400 mt-0.5">Issued 2024</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Languages -->
+          <h3 class="reveal delay-200 text-sm font-semibold uppercase tracking-wider text-stone-400 mt-10 mb-6 flex items-center gap-2">
+            <span class="iconify text-accent-500" data-icon="lucide:languages" data-width="16"></span>
+            Languages
+          </h3>
+
+          <div class="reveal delay-300 card-hover bg-white rounded-2xl p-6 border border-stone-200/50">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-xl bg-accent-100 flex items-center justify-center shrink-0">
+                <span class="text-lg">🇬🇧</span>
+              </div>
+              <div>
+                <h4 class="text-base font-semibold text-stone-900">English</h4>
+                <p class="text-sm text-stone-500 mt-0.5">Professional Proficiency</p>
+              </div>
+              <div class="ml-auto flex gap-1">
+                <div class="w-3 h-3 rounded-full bg-accent-500"></div>
+                <div class="w-3 h-3 rounded-full bg-accent-500"></div>
+                <div class="w-3 h-3 rounded-full bg-accent-500"></div>
+                <div class="w-3 h-3 rounded-full bg-accent-500"></div>
+                <div class="w-3 h-3 rounded-full bg-stone-200"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT ==================== -->
+  <section id="contact" class="py-24 bg-white relative overflow-hidden">
+    <!-- Background decoration -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-accent-100/30 blur-3xl"></div>
+      <div class="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-stone-100/50 blur-3xl"></div>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-16">
+        <span class="reveal text-xs font-semibold uppercase tracking-wider text-accent-600 mb-3 block">Let's Connect</span>
+        <h2 class="reveal delay-100 font-serif text-3xl md:text-4xl font-600 tracking-tight text-stone-900 mb-4">
+          Get in <span class="gradient-text">Touch</span>
+        </h2>
+        <p class="reveal delay-200 text-stone-500 max-w-lg mx-auto">
+          Have a project in mind or just want to say hi? I'd love to hear from you. Let's create something beautiful together.
+        </p>
+      </div>
+
+      <div class="reveal delay-300 bg-stone-50 rounded-3xl p-8 md:p-12 border border-stone-200/50">
+        <div class="grid md:grid-cols-3 gap-6 mb-10">
+          <!-- Email -->
+          <a href="mailto:mtcyousefi@gmail.com" class="card-hover group flex flex-col items-center text-center p-6 bg-white rounded-2xl border border-stone-200/50">
+            <div class="w-14 h-14 rounded-xl bg-accent-100 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+              <span class="iconify text-accent-600" data-icon="lucide:mail" data-width="24"></span>
+            </div>
+            <span class="text-sm font-semibold text-stone-900 mb-1">Email</span>
+            <span class="text-xs text-stone-500">mtcyousefi@gmail.com</span>
+          </a>
+
+          <!-- Phone -->
+          <a href="tel:+989019095383" class="card-hover group flex flex-col items-center text-center p-6 bg-white rounded-2xl border border-stone-200/50">
+            <div class="w-14 h-14 rounded-xl bg-accent-100 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+              <span class="iconify text-accent-600" data-icon="lucide:phone" data-width="24"></span>
+            </div>
+            <span class="text-sm font-semibold text-stone-900 mb-1">Phone</span>
+            <span class="text-xs text-stone-500">+98 901 909 5383</span>
+          </a>
+
+          <!-- Location -->
+          <div class="card-hover group flex flex-col items-center text-center p-6 bg-white rounded-2xl border border-stone-200/50">
+            <div class="w-14 h-14 rounded-xl bg-accent-100 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+              <span class="iconify text-accent-600" data-icon="lucide:map-pin" data-width="24"></span>
+            </div>
+            <span class="text-sm font-semibold text-stone-900 mb-1">Location</span>
+            <span class="text-xs text-stone-500">Tehran, Iran</span>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <form id="contact-form" class="space-y-5">
+          <div class="grid md:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">Name</label>
+              <input type="text" placeholder="Your name" class="w-full px-4 py-3 rounded-xl bg-white border border-stone-200 text-stone-800 text-sm placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-accent-500/30 focus:border-accent-500 transition-all" required />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">Email</label>
+              <input type="email" placeholder="you@email.com" class="w-full px-4 py-3 rounded-xl bg-white border border-stone-200 text-stone-800 text-sm placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-accent-500/30 focus:border-accent-500 transition-all" required />
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">Subject</label>
+            <input type="text" placeholder="Project inquiry, collaboration, etc." class="w-full px-4 py-3 rounded-xl bg-white border border-stone-200 text-stone-800 text-sm placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-accent-500/30 focus:border-accent-500 transition-all" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">Message</label>
+            <textarea rows="4" placeholder="Tell me about your project..." class="w-full px-4 py-3 rounded-xl bg-white border border-stone-200 text-stone-800 text-sm placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-accent-500/30 focus:border-accent-500 transition-all resize-none" required></textarea>
+          </div>
+          <div class="flex items-center justify-between">
+            <p id="form-status" class="text-sm font-medium hidden"></p>
+            <button type="submit" class="ml-auto inline-flex items-center gap-2 bg-stone-900 text-white text-sm font-medium px-8 py-3.5 rounded-full hover:bg-stone-800 hover:-translate-y-0.5 transition-all duration-300 shadow-lg shadow-stone-900/20">
+              <span>Send Message</span>
+              <span class="iconify" data-icon="lucide:send" data-width="14"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-stone-900 text-stone-400 py-12">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <a href="#hero" class="font-serif text-xl font-600 text-white">
+            <span class="text-accent-500">M</span>aede<span class="text-stone-600">.</span>
+          </a>
+          <p class="text-sm mt-1">Graphic Designer & Illustrator</p>
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="mailto:mtcyousefi@gmail.com" class="hover:text-accent-500 transition-colors">
+            <span class="iconify" data-icon="lucide:mail" data-width="18"></span>
+          </a>
+          <a href="tel:+989019095383" class="hover:text-accent-500 transition-colors">
+            <span class="iconify" data-icon="lucide:phone" data-width="18"></span>
+          </a>
+          <a href="#" class="hover:text-accent-500 transition-colors">
+            <span class="iconify" data-icon="lucide:linkedin" data-width="18"></span>
+          </a>
+          <a href="#" class="hover:text-accent-500 transition-colors">
+            <span class="iconify" data-icon="lucide:instagram" data-width="18"></span>
+          </a>
+        </div>
+        <p class="text-xs text-stone-600">© 2025 Maede Yousefi. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script>
+    // ===== Navbar scroll effect =====
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.style.background = 'rgba(255,255,255,0.9)';
+        navbar.style.backdropFilter = 'blur(12px)';
+        navbar.style.borderBottom = '1px solid rgba(231,229,228,0.5)';
+        navbar.style.boxShadow = '0 1px 2px 0 rgb(0 0 0 / 0.05)';
+      } else {
+        navbar.style.background = 'transparent';
+        navbar.style.backdropFilter = 'none';
+        navbar.style.borderBottom = 'none';
+        navbar.style.boxShadow = 'none';
+      }
+    });
+
+    // ===== Mobile menu toggle =====
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    // Close mobile menu on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // ===== Scroll reveal =====
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // ===== Skill bars animation =====
+    const skillBars = document.querySelectorAll('.skill-fill');
+    const skillObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const targetWidth = entry.target.getAttribute('data-width');
+          entry.target.style.width = targetWidth + '%';
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.3 });
+
+    skillBars.forEach(bar => skillObserver.observe(bar));
+
+    // ===== Contact form =====
+    const contactForm = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Show success message
+      formStatus.textContent = '✓ Message sent successfully!';
+      formStatus.className = 'text-sm font-medium text-green-600';
+      formStatus.classList.remove('hidden');
+      
+      // Reset form
+      contactForm.reset();
+      
+      // Hide message after 4 seconds
+      setTimeout(() => {
+        formStatus.classList.add('hidden');
+      }, 4000);
+    });
+
+    // ===== Smooth scroll for anchor links =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
